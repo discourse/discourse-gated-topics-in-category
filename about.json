@@ -3,6 +3,6 @@
   "license_url": null,
   "assets": {
   },
-  "name": "discourse-gated-category",
+  "name": "discourse-gated-topics-in-category",
   "component": true
 }
