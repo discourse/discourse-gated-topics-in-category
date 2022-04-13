@@ -3,19 +3,3 @@ enabled_categories:
   list_type: category
   default: ""
   description: "Choose which categories that users need to sign up for."
-heading_text:
-  type: string
-  default: "This area is for members only"
-  description: ""
-subheading_text:
-  type: string
-  default: "Create an account to view this content"
-  description: ""
-signup_cta_label:
-  type: string
-  default: "Sign Up"
-  description: ""
-login_cta_label:
-  type: string
-  default: "Already have an account? Sign in"
-  description: ""

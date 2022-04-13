@@ -34,6 +34,14 @@
     &__signup {
       margin-bottom: 1rem;
     }
+
+    &__login {
+
+      #cta-login-link {
+        background: transparent;
+        color: var(--primary-high);
+      }
+    }
   }
 }
 

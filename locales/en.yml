@@ -1,3 +1,7 @@
 en:
   theme_metadata:
     description: "Categories with logged-in access only"
+  heading_text: "This area is for members only"
+  subheading_text: "Create an account to view this content"
+  signup_cta_label: "Sign Up"
+  login_cta_label: "Already have an account? Sign in"
