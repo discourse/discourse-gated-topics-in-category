@@ -1,22 +1,19 @@
 .custom-gated-topic-container {
   background: var(--tertiary-low);
   border-top: 5px solid var(--tertiary);
-  position: fixed;
+  position: absolute;
   width: 100%;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  min-height: 50%;
-
-  // align content in the middle
-  display: grid;
-  place-items: center;
+  min-height: 68%;
 }
 
 .custom-gated-topic-content {
   text-align: center;
-  padding: 0 1rem;
+  margin: 10vh auto 0;
+  padding: 1rem;
 
   &--header {
     font-size: var(--font-up-5);
@@ -55,5 +52,18 @@
   .post-stream {
     max-height: 150vh;
     overflow: hidden;
+  }
+}
+
+.mobile-view {
+  .custom-gated-topic-container {
+    position: fixed;
+    min-height: 50%;
+    display: grid;
+    place-items: center;
+  }
+
+  .custom-gated-topic-content {
+    margin: auto;
   }
 }
