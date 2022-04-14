@@ -1,13 +1,13 @@
 .custom-gated-topic-container {
   background: var(--tertiary-low);
   border-top: 5px solid var(--tertiary);
-  position: absolute;
+  position: fixed;
   width: 100%;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  min-height: 68%;
+  min-height: 50%;
 }
 
 .custom-gated-topic-content {
@@ -53,17 +53,21 @@
     max-height: 150vh;
     overflow: hidden;
   }
-}
 
-.mobile-view {
-  .custom-gated-topic-container {
-    position: fixed;
-    min-height: 50%;
-    display: grid;
-    place-items: center;
-  }
-
-  .custom-gated-topic-content {
-    margin: auto;
+  .container.posts::before { // ensure to cover most of the content when zoomed out
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,1) 60%,
+      rgba(255,255,255,1) 70%,
+      rgba(255,255,255,0) 100%);
   }
 }
