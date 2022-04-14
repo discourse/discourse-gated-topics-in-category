@@ -57,11 +57,11 @@
   .container.posts::before { // ensure to cover most of the content when zoomed out
     content: "";
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: 90%;
     z-index: 50;
     background: rgb(255,255,255);
     background: linear-gradient(0deg,
