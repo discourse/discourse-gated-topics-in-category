@@ -1,7 +1,10 @@
 {
+  "name": "discourse-gated-topics-in-category",
+  "version": "1.0.0",
+  "repository": "https://github.com/discourse/discourse-gated-topics-in-category",
   "author": "ella",
   "license": "MIT",
   "devDependencies": {
-    "eslint-config-discourse": "latest"
+    "eslint-config-discourse": "^3.1.0"
   }
 }
