@@ -1,5 +1,5 @@
 # discourse-gated-topics-in-category
-This theme component restricts users from accessing topics from specific categories. A prompt will be displayed to encourage logins.
+This theme component allows site admins to show a login prompt that covers the topic contents in specific categories as a way to encourage readers to sign up and log in.
 
 <img width="1202" alt="image" src="https://user-images.githubusercontent.com/2790986/165406143-13fdd335-30d5-4bfc-b6d1-bb761e1dc086.png">
 
