@@ -31,7 +31,7 @@ export default Component.extend({
     // a) topic does not have a category and does not have a gated tag
     // b) component setting is empty
     // c) user is logged in
-    const gatedByTag = this.tags.some((t) => enabledTags.includes(t));
+    const gatedByTag = this.tags?.some((t) => enabledTags.includes(t));
 
     if (
       (!this.categoryId && !gatedByTag) ||
