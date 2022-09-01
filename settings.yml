@@ -6,5 +6,5 @@ enabled_categories:
 enabled_tags:
   type: list
   list_type: tag
-  default: "gated"
+  default: ""
   description: "Choose which tags that users need to sign up for. The default is 'gated'."
