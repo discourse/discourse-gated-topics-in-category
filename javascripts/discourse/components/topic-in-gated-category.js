@@ -11,7 +11,6 @@ const enabledTags = settings.enabled_tags.split("|").filter((t) => t);
 export default Component.extend({
   tagName: "",
   hidden: true,
-  gatedByTag: false,
 
   didInsertElement() {
     this._super(...arguments);
@@ -32,17 +31,17 @@ export default Component.extend({
     // a) topic does not have a category and does not have a gated tag
     // b) component setting is empty
     // c) user is logged in
-    this.gatedByTag = this.tags.some((t) => enabledTags.includes(t));
+    const gatedByTag = this.tags.some((t) => enabledTags.includes(t));
 
     if (
-      (!this.categoryId && !this.gatedByTag) ||
+      (!this.categoryId && !gatedByTag) ||
       (enabledCategories.length === 0 && enabledTags.length === 0) ||
       this.currentUser
     ) {
       return;
     }
 
-    if (enabledCategories.includes(this.categoryId) || this.gatedByTag) {
+    if (enabledCategories.includes(this.categoryId) || gatedByTag) {
       document.body.classList.add("topic-in-gated-category");
       this.set("hidden", false);
     }
