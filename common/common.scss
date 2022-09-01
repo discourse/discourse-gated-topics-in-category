@@ -54,23 +54,25 @@
     overflow: hidden;
   }
 
-  .container.posts::before {
-    // ensure to cover most of the content when zoomed out
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 90%;
-    z-index: 50;
-    background: rgb(255, 255, 255);
-    background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 1) 60%,
-      rgba(255, 255, 255, 1) 70%,
-      rgba(255, 255, 255, 0) 100%
-    );
+  .container.posts {
+    position: relative;
+    &:before {
+      // ensure to cover most of the content when zoomed out
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 50;
+      background: rgb(255, 255, 255);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 10%,
+        rgba(255, 255, 255, 0.6) 60%,
+        rgba(255, 255, 255, 1) 100%
+      );
+    }
   }
 }
