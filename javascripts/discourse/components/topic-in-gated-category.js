@@ -6,7 +6,7 @@ const enabledCategories = settings.enabled_categories
   .map((id) => parseInt(id, 10))
   .filter((id) => id);
 
-const enabledTags = settings.enabled_tags.split("|").filter((t) => t);
+const enabledTags = settings.enabled_tags.split("|").filter(Boolean);
 
 export default Component.extend({
   tagName: "",
