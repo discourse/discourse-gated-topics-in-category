@@ -23,6 +23,7 @@ export default Component.extend({
   },
 
   willDestroyElement() {
+    this._super(...arguments);
     document.body.classList.remove("topic-in-gated-category");
   },
 
