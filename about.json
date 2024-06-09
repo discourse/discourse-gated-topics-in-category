@@ -1,7 +1,7 @@
 {
-  "about_url": null,
-  "license_url": null,
+  "about_url": "https://meta.discourse.org/t/gated-topics-in-category/225454",
+  "license_url": "https://github.com/discourse/discourse-gated-topics-in-category/blob/main/LICENSE",
   "assets": {},
-  "name": "discourse-gated-topics-in-category",
+  "name": "Gated Topics in Category",
   "component": true
 }
