@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 de:
+  theme_metadata:
+    description: "Kategorien, auf die der Zugriff nur eingeloggt möglich ist"
+  heading_text: "Dieser Bereich ist nur für Mitglieder"
+  subheading_text: "Erstelle ein Konto, um diesen Inhalt zu sehen"
+  signup_cta_label: "Registrieren"
+  login_cta_label: "Du hast bereits ein Konto? Anmelden"
