@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 he:
+  theme_metadata:
+    description: "קטגוריות עם כניסה למערכת בלבד"
+  heading_text: "האזור הזה הוא לחברים בלבד"
+  subheading_text: "נא ליצור חשבון כדי לצפות בתוכן הזה"
+  signup_cta_label: "הרשמה"
+  login_cta_label: "כבר יש לך חשבון? נא להיכנס"
