@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 zh_CN:
+  theme_metadata:
+    description: "仅限登录后访问的类别"
+  heading_text: "此区域仅面向成员"
+  subheading_text: "创建帐户以查看此内容"
+  signup_cta_label: "注册"
+  login_cta_label: "已有帐户？请登录"

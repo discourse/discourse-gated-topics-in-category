@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 es:
+  theme_metadata:
+    description: "Categorías con acceso restringido"
+  heading_text: "Esta área es solo para miembros"
+  subheading_text: "Crea una cuenta para ver este contenido"
+  signup_cta_label: "Registrarse"
+  login_cta_label: "¿Ya tienes una cuenta? Iniciar sesión"

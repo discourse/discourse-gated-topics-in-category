@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 ar:
+  theme_metadata:
+    description: "الفئات التي يمكن الوصول إليها عن طريق تسجيل الدخول فقط"
+  heading_text: "هذه المنطقة مخصَّصة للأعضاء فقط"
+  subheading_text: "أنشئ حسابًا لعرض هذا المحتوى"
+  signup_cta_label: "الاشتراك"
+  login_cta_label: "هل لديك حساب بالفعل؟ سجِّل الدخول"

@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 ja:
+  theme_metadata:
+    description: "ログインアクセス限定のカテゴリ"
+  heading_text: "このエリアはメンバー専用です"
+  subheading_text: "このコンテンツを表示するにはアカウントを作成してください"
+  signup_cta_label: "アカウントを登録"
+  login_cta_label: "すでにアカウントをお持ちですか？サインインしてください"

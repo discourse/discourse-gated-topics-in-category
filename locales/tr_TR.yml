@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  theme_metadata:
+    description: "Yalnızca giriş yapmış kişilerin erişebildiği kategoriler"
+  heading_text: "Bu alan yalnızca üyelere özeldir"
+  subheading_text: "Bu içeriği görüntülemek için bir hesap oluşturun"
+  signup_cta_label: "Kaydol"
+  login_cta_label: "Zaten hesabınız var mı? Giriş yapın"

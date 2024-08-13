@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 it:
+  theme_metadata:
+    description: "Categorie con accesso solo per chi ha effettuato l'accesso"
+  heading_text: "Quest'area è riservata ai soli membri"
+  subheading_text: "Crea un account per visualizzare questo contenuto"
+  signup_cta_label: "Registrati"
+  login_cta_label: "Hai già un account? Accedi"

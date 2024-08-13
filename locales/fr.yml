@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 fr:
+  theme_metadata:
+    description: "Catégories avec accès connecté uniquement"
+  heading_text: "Cette zone est réservée aux membres"
+  subheading_text: "Créez un compte pour consulter ce contenu"
+  signup_cta_label: "S'inscrire"
+  login_cta_label: "Vous avez déjà un compte ? Connectez-vous"

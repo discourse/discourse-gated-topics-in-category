@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 fi:
+  theme_metadata:
+    description: "Alueet, jotka ovat käytettävissä vain kirjautuneena"
+  heading_text: "Tämä alue on vain jäsenille"
+  subheading_text: "Luo tili, jotta voit katsoa tämän sisällön"
+  signup_cta_label: "Rekisteröidy"
+  login_cta_label: "Onko sinulla jo tili? Kirjaudu sisään"
