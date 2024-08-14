@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 ru:
+  theme_metadata:
+    description: "Категории с доступом только для зарегистрированных пользователей"
+  heading_text: "Эта область только для участников"
+  subheading_text: "Создайте аккаунт для просмотра этого контента"
+  signup_cta_label: "Зарегистрироваться"
+  login_cta_label: "Уже есть аккаунт? Войти"
