@@ -1,4 +1,5 @@
 import Component from "@ember/component";
+import { tagName } from "@ember-decorators/component";
 import discourseComputed from "discourse-common/utils/decorators";
 
 const enabledCategories = settings.enabled_categories
@@ -8,24 +9,24 @@ const enabledCategories = settings.enabled_categories
 
 const enabledTags = settings.enabled_tags.split("|").filter(Boolean);
 
-export default Component.extend({
-  tagName: "",
-  hidden: true,
+@tagName("")
+export default class TopicInGatedCategory extends Component {
+  hidden = true;
 
   didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
     this.recalculate();
-  },
+  }
 
   didUpdateAttrs() {
-    this._super(...arguments);
+    super.didUpdateAttrs(...arguments);
     this.recalculate();
-  },
+  }
 
   willDestroyElement() {
-    this._super(...arguments);
+    super.willDestroyElement(...arguments);
     document.body.classList.remove("topic-in-gated-category");
-  },
+  }
 
   recalculate() {
     // do nothing if:
@@ -46,10 +47,10 @@ export default Component.extend({
       document.body.classList.add("topic-in-gated-category");
       this.set("hidden", false);
     }
-  },
+  }
 
   @discourseComputed("hidden")
   shouldShow(hidden) {
     return !hidden;
-  },
-});
+  }
+}
