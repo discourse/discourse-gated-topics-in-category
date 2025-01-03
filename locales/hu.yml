@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 hu:
+  theme_metadata:
+    description: "Csak bejelentkezett hozzáféréssel rendelkező kategóriák"
+  heading_text: "Ez a terület csak a tagok számára elérhető"
+  subheading_text: "Hozzon létre egy fiókot a tartalom megtekintéséhez"
+  signup_cta_label: "Regisztráció"
+  login_cta_label: "Már van fiókja? Jelentkezzen be"
