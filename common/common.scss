@@ -56,7 +56,8 @@
 
   .container.posts {
     position: relative;
-    &:before {
+
+    &::before {
       // ensure to cover most of the content when zoomed out
       content: "";
       position: absolute;
