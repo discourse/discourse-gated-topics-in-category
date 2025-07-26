@@ -5,16 +5,14 @@ import routeAction from "discourse/helpers/route-action";
 import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 
-const enabledCategories = settings.enabled_categories
-  .split("|")
-  .map((id) => parseInt(id, 10))
-  .filter((id) => id);
-
-const enabledTags = settings.enabled_tags.split("|").filter(Boolean);
-
 @tagName("")
 export default class TopicInGatedCategory extends Component {
   hidden = true;
+  enabledCategories = settings.enabled_categories
+    .split("|")
+    .map((id) => parseInt(id, 10))
+    .filter((id) => id);
+  enabledTags = settings.enabled_tags.split("|").filter(Boolean);
 
   didInsertElement() {
     super.didInsertElement(...arguments);
@@ -36,17 +34,17 @@ export default class TopicInGatedCategory extends Component {
     // a) topic does not have a category and does not have a gated tag
     // b) component setting is empty
     // c) user is logged in
-    const gatedByTag = this.tags?.some((t) => enabledTags.includes(t));
+    const gatedByTag = this.tags?.some((t) => this.enabledTags.includes(t));
 
     if (
       (!this.categoryId && !gatedByTag) ||
-      (enabledCategories.length === 0 && enabledTags.length === 0) ||
+      (this.enabledCategories.length === 0 && this.enabledTags.length === 0) ||
       this.currentUser
     ) {
       return;
     }
 
-    if (enabledCategories.includes(this.categoryId) || gatedByTag) {
+    if (this.enabledCategories.includes(this.categoryId) || gatedByTag) {
       document.body.classList.add("topic-in-gated-category");
       this.set("hidden", false);
     }
