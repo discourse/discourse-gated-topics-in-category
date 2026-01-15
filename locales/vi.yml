@@ -5,3 +5,9 @@
 # https://translate.discourse.org/
 
 vi:
+  theme_metadata:
+    description: "Các chuyên mục chỉ dành cho thành viên đã đăng nhập"
+  heading_text: "Khu vực này chỉ dành cho thành viên"
+  subheading_text: "Tạo tài khoản để xem nội dung này."
+  signup_cta_label: "Đăng ký"
+  login_cta_label: "Bạn đã có tài khoản? Đăng nhập"
