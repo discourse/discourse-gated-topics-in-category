@@ -34,7 +34,12 @@ export default class TopicInGatedCategory extends Component {
     // a) topic does not have a category and does not have a gated tag
     // b) component setting is empty
     // c) user is logged in
-    const gatedByTag = this.tags?.some((t) => this.enabledTags.includes(t));
+    // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
+    // removed using .discourse-compatibility once the PR is merged.
+    const gatedByTag = this.tags?.some((t) => {
+      const name = typeof t === "string" ? t : t.name;
+      return this.enabledTags.includes(name);
+    });
 
     if (
       (!this.categoryId && !gatedByTag) ||
