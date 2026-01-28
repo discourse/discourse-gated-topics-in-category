@@ -2,7 +2,7 @@
 
 require_relative "page_objects/components/gated_topic"
 
-RSpec.describe "Gated topics with tags", type: :system do
+RSpec.describe "Gated topics with tags" do
   fab!(:tag) { Fabricate(:tag, name: "premium") }
   fab!(:topic)
   fab!(:post) { Fabricate(:post, topic:) }
