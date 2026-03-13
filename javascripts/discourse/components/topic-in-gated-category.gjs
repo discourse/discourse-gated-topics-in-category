@@ -1,8 +1,9 @@
+/* eslint-disable ember/no-classic-components */
 import Component from "@ember/component";
+import { computed } from "@ember/object";
 import { tagName } from "@ember-decorators/component";
 import DButton from "discourse/components/d-button";
 import routeAction from "discourse/helpers/route-action";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 
 @tagName("")
@@ -55,9 +56,9 @@ export default class TopicInGatedCategory extends Component {
     }
   }
 
-  @discourseComputed("hidden")
-  shouldShow(hidden) {
-    return !hidden;
+  @computed("hidden")
+  get shouldShow() {
+    return !this.hidden;
   }
 
   <template>
