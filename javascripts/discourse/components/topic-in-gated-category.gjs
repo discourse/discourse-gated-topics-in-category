@@ -14,6 +14,10 @@ export default class TopicInGatedCategory extends Component {
     .map((id) => parseInt(id, 10))
     .filter((id) => id);
   enabledTags = settings.enabled_tags.split("|").filter(Boolean);
+  enabledGroups = settings.enabled_groups
+    .split("|")
+    .map((id) => parseInt(id, 10))
+    .filter((id) => !isNaN(id));
 
   didInsertElement() {
     super.didInsertElement(...arguments);
@@ -34,7 +38,8 @@ export default class TopicInGatedCategory extends Component {
     // do nothing if:
     // a) topic does not have a category and does not have a gated tag
     // b) component setting is empty
-    // c) user is logged in
+    // c) user is logged in as staff
+    // d) user is logged in and component is not gated by group or user is in an enabled group
     // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
     // removed using .discourse-compatibility once the PR is merged.
     const gatedByTag = this.tags?.some((t) => {
@@ -45,7 +50,9 @@ export default class TopicInGatedCategory extends Component {
     if (
       (!this.categoryId && !gatedByTag) ||
       (this.enabledCategories.length === 0 && this.enabledTags.length === 0) ||
-      this.currentUser
+      this.currentUser?.staff ||
+      (this.currentUser && this.enabledGroups.length === 0) ||
+      (this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id)))
     ) {
       return;
     }
@@ -61,6 +68,10 @@ export default class TopicInGatedCategory extends Component {
     return !this.hidden;
   }
 
+  get showGroupGate() {
+    return this.currentUser && this.enabledGroups.length > 0;
+  }
+
   <template>
     {{#if this.shouldShow}}
       <div class="custom-gated-topic-container">
@@ -70,26 +81,42 @@ export default class TopicInGatedCategory extends Component {
           </div>
 
           <p class="custom-gated-topic-content--text">
-            {{i18n (themePrefix "subheading_text")}}
+            {{#if this.showGroupGate}}
+              {{i18n (themePrefix "group_subheading_text")}}
+            {{else}}
+              {{i18n (themePrefix "subheading_text")}}
+            {{/if}}
           </p>
 
           <div class="custom-gated-topic-content--cta">
-            <div class="custom-gated-topic-content--cta__signup">
-              <DButton
-                @action={{routeAction "showCreateAccount"}}
-                class="btn-primary btn-large sign-up-button"
-                @translatedLabel={{i18n (themePrefix "signup_cta_label")}}
-              />
-            </div>
+            {{#if this.showGroupGate}}
+              {{#if settings.custom_button_link}}
+                <div class="custom-gated-topic-content--cta__group">
+                  <DButton
+                    @href={{settings.custom_button_link}}
+                    class="btn-primary btn-large"
+                    @translatedLabel={{i18n (themePrefix "group_cta_label")}}
+                  />
+                </div>
+              {{/if}}
+            {{else}}
+              <div class="custom-gated-topic-content--cta__signup">
+                <DButton
+                  @action={{routeAction "showCreateAccount"}}
+                  class="btn-primary btn-large sign-up-button"
+                  @translatedLabel={{i18n (themePrefix "signup_cta_label")}}
+                />
+              </div>
 
-            <div class="custom-gated-topic-content--cta__login">
-              <DButton
-                @action={{routeAction "showLogin"}}
-                @id="cta-login-link"
-                class="btn btn-text login-button"
-                @translatedLabel={{i18n (themePrefix "login_cta_label")}}
-              />
-            </div>
+              <div class="custom-gated-topic-content--cta__login">
+                <DButton
+                  @action={{routeAction "showLogin"}}
+                  @id="cta-login-link"
+                  class="btn btn-text login-button"
+                  @translatedLabel={{i18n (themePrefix "login_cta_label")}}
+                />
+              </div>
+            {{/if}}
           </div>
         </div>
       </div>

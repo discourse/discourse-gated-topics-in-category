@@ -5,3 +5,5 @@ en:
   subheading_text: "Create an account to view this content"
   signup_cta_label: "Sign Up"
   login_cta_label: "Already have an account? Sign in"
+  group_subheading_text: "You need to be a member of a specific group to view this content"
+  group_cta_label: "Go to groups page"
