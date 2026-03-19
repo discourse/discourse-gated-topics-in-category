@@ -74,3 +74,142 @@ acceptance("Gated Topics - Logged In", function (needs) {
       );
   });
 });
+
+acceptance("Gated Topics - User in Allowed Group", function (needs) {
+  needs.user({
+    groups: [{ id: 42, name: "premium" }],
+  });
+  needs.settings({ tagging_enabled: true });
+  needs.hooks.beforeEach(function () {
+    settings.enabled_categories = "2";
+    settings.enabled_groups = "42";
+  });
+
+  needs.hooks.afterEach(function () {
+    settings.enabled_categories = "";
+    settings.enabled_groups = "";
+  });
+
+  test("no gate shown for user in allowed group", async function (assert) {
+    await visit("/t/internationalization-localization/280");
+
+    assert
+      .dom(".custom-gated-topic-content")
+      .doesNotExist("gate not shown when user is in the allowed group");
+  });
+});
+
+acceptance("Gated Topics - User NOT in Allowed Group", function (needs) {
+  needs.user({
+    groups: [{ id: 99, name: "other" }],
+  });
+  needs.settings({ tagging_enabled: true });
+  needs.hooks.beforeEach(function () {
+    settings.enabled_categories = "2";
+    settings.enabled_groups = "42";
+  });
+
+  needs.hooks.afterEach(function () {
+    settings.enabled_categories = "";
+    settings.enabled_groups = "";
+  });
+
+  test("gate shown with group subheading and no CTA button", async function (assert) {
+    await visit("/t/internationalization-localization/280");
+
+    assert
+      .dom(".custom-gated-topic-content")
+      .exists("gate shown when user is not in the allowed group");
+
+    assert
+      .dom(".custom-gated-topic-content--cta__group")
+      .doesNotExist("no group CTA button when custom_button_link is empty");
+
+    assert
+      .dom(".custom-gated-topic-content--cta__signup")
+      .doesNotExist("signup CTA not shown for logged-in user");
+  });
+});
+
+acceptance("Gated Topics - User NOT in Group with Custom Link", function (needs) {
+  needs.user({
+    groups: [{ id: 99, name: "other" }],
+  });
+  needs.settings({ tagging_enabled: true });
+  needs.hooks.beforeEach(function () {
+    settings.enabled_categories = "2";
+    settings.enabled_groups = "42";
+    settings.custom_button_link = "https://example.com/subscribe";
+  });
+
+  needs.hooks.afterEach(function () {
+    settings.enabled_categories = "";
+    settings.enabled_groups = "";
+    settings.custom_button_link = "";
+  });
+
+  test("gate shown with custom CTA button", async function (assert) {
+    await visit("/t/internationalization-localization/280");
+
+    assert
+      .dom(".custom-gated-topic-content--cta__group .btn-primary")
+      .exists("group CTA button is shown when custom link is set");
+
+    assert
+      .dom(".custom-gated-topic-content--cta__group .btn-primary")
+      .hasAttribute(
+        "href",
+        "https://example.com/subscribe",
+        "CTA uses custom button link"
+      );
+  });
+});
+
+acceptance("Gated Topics - User in One of Multiple Groups", function (needs) {
+  needs.user({
+    groups: [{ id: 99, name: "vip" }],
+  });
+  needs.settings({ tagging_enabled: true });
+  needs.hooks.beforeEach(function () {
+    settings.enabled_categories = "2";
+    settings.enabled_groups = "42|99";
+  });
+
+  needs.hooks.afterEach(function () {
+    settings.enabled_categories = "";
+    settings.enabled_groups = "";
+  });
+
+  test("no gate shown for user in one of multiple allowed groups", async function (assert) {
+    await visit("/t/internationalization-localization/280");
+
+    assert
+      .dom(".custom-gated-topic-content")
+      .doesNotExist("gate not shown when user is in one of the allowed groups");
+  });
+});
+
+acceptance("Gated Topics - Staff Bypass with Groups", function (needs) {
+  needs.user({
+    admin: true,
+    groups: [{ id: 99, name: "other" }],
+  });
+  needs.settings({ tagging_enabled: true });
+  needs.hooks.beforeEach(function () {
+    settings.enabled_categories = "2";
+    settings.enabled_groups = "42";
+  });
+
+  needs.hooks.afterEach(function () {
+    settings.enabled_categories = "";
+    settings.enabled_groups = "";
+  });
+
+  test("no gate shown for staff user not in allowed group", async function (assert) {
+    await visit("/t/internationalization-localization/280");
+
+    assert
+      .dom(".custom-gated-topic-content")
+      .doesNotExist("gate not shown for staff even when not in allowed group");
+  });
+});
