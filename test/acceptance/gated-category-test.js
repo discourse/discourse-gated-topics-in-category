@@ -123,7 +123,9 @@ acceptance("Gated Topics - User NOT in Allowed Group", function (needs) {
 
     assert
       .dom(".custom-gated-topic-content--cta__group .btn-primary")
-      .doesNotExist("no group CTA button when group_custom_button_link is empty");
+      .doesNotExist(
+        "no group CTA button when group_custom_button_link is empty"
+      );
 
     assert
       .dom(".custom-gated-topic-content--cta__signup")
@@ -131,39 +133,42 @@ acceptance("Gated Topics - User NOT in Allowed Group", function (needs) {
   });
 });
 
-acceptance("Gated Topics - User NOT in Group with Custom Link", function (needs) {
-  needs.user({
-    groups: [{ id: 99, name: "other" }],
-  });
-  needs.settings({ tagging_enabled: true });
-  needs.hooks.beforeEach(function () {
-    settings.enabled_categories = "2";
-    settings.enabled_groups = "42";
-    settings.group_custom_button_link = "https://example.com/subscribe";
-  });
+acceptance(
+  "Gated Topics - User NOT in Group with Custom Link",
+  function (needs) {
+    needs.user({
+      groups: [{ id: 99, name: "other" }],
+    });
+    needs.settings({ tagging_enabled: true });
+    needs.hooks.beforeEach(function () {
+      settings.enabled_categories = "2";
+      settings.enabled_groups = "42";
+      settings.group_custom_button_link = "https://example.com/subscribe";
+    });
 
-  needs.hooks.afterEach(function () {
-    settings.enabled_categories = "";
-    settings.enabled_groups = "";
-    settings.group_custom_button_link = "";
-  });
+    needs.hooks.afterEach(function () {
+      settings.enabled_categories = "";
+      settings.enabled_groups = "";
+      settings.group_custom_button_link = "";
+    });
 
-  test("gate shown with custom CTA button", async function (assert) {
-    await visit("/t/internationalization-localization/280");
+    test("gate shown with custom CTA button", async function (assert) {
+      await visit("/t/internationalization-localization/280");
 
-    assert
-      .dom(".custom-gated-topic-content--cta__group .btn-primary")
-      .exists("group CTA button is shown when custom link is set");
+      assert
+        .dom(".custom-gated-topic-content--cta__group .btn-primary")
+        .exists("group CTA button is shown when custom link is set");
 
-    assert
-      .dom(".custom-gated-topic-content--cta__group .btn-primary")
-      .hasAttribute(
-        "href",
-        "https://example.com/subscribe",
-        "CTA uses custom button link"
-      );
-  });
-});
+      assert
+        .dom(".custom-gated-topic-content--cta__group .btn-primary")
+        .hasAttribute(
+          "href",
+          "https://example.com/subscribe",
+          "CTA uses custom button link"
+        );
+    });
+  }
+);
 
 acceptance("Gated Topics - User in One of Multiple Groups", function (needs) {
   needs.user({
@@ -189,23 +194,26 @@ acceptance("Gated Topics - User in One of Multiple Groups", function (needs) {
   });
 });
 
-acceptance("Gated Topics - Groups Only (no categories or tags)", function (needs) {
-  needs.user({
-    groups: [{ id: 99, name: "other" }],
-  });
-  needs.hooks.beforeEach(function () {
-    settings.enabled_groups = "42";
-  });
+acceptance(
+  "Gated Topics - Groups Only (no categories or tags)",
+  function (needs) {
+    needs.user({
+      groups: [{ id: 99, name: "other" }],
+    });
+    needs.hooks.beforeEach(function () {
+      settings.enabled_groups = "42";
+    });
 
-  needs.hooks.afterEach(function () {
-    settings.enabled_groups = "";
-  });
+    needs.hooks.afterEach(function () {
+      settings.enabled_groups = "";
+    });
 
-  test("gate shown on any topic when only groups configured", async function (assert) {
-    await visit("/t/internationalization-localization/280");
+    test("gate shown on any topic when only groups configured", async function (assert) {
+      await visit("/t/internationalization-localization/280");
 
-    assert
-      .dom(".custom-gated-topic-content")
-      .exists("gate shown even without category/tag settings");
-  });
-});
+      assert
+        .dom(".custom-gated-topic-content")
+        .exists("gate shown even without category/tag settings");
+    });
+  }
+);

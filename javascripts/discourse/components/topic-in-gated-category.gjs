@@ -39,7 +39,9 @@ export default class TopicInGatedCategory extends Component {
     // removed using .discourse-compatibility once the PR is merged.
 
     // user is in an enabled group — always bypass
-    if (this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))) {
+    if (
+      this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))
+    ) {
       return;
     }
 
