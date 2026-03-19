@@ -9,7 +9,6 @@ RSpec.describe "Gated topics with groups" do
   fab!(:group) { Fabricate(:group, name: "premium") }
   fab!(:member, :user)
   fab!(:non_member, :user)
-  fab!(:staff_user, :admin)
 
   let!(:theme) { upload_theme_component }
   let(:gated_topic) { PageObjects::Components::GatedTopic.new }
@@ -33,12 +32,6 @@ RSpec.describe "Gated topics with groups" do
     expect(gated_topic).to have_gate
     expect(gated_topic).to have_group_gate
     expect(gated_topic).to have_no_group_cta_button
-  end
-
-  it "does not show gate for staff user not in allowed group" do
-    sign_in(staff_user)
-    visit(topic.url)
-    expect(gated_topic).to have_no_gate
   end
 
   it "shows anonymous gate (not group gate) for anonymous users" do
@@ -74,6 +67,20 @@ RSpec.describe "Gated topics with groups" do
       sign_in(second_group_member)
       visit(topic.url)
       expect(gated_topic).to have_no_gate
+    end
+  end
+
+  context "with only groups configured (no categories or tags)" do
+    before do
+      theme.update_setting(:enabled_categories, "")
+      theme.save!
+    end
+
+    it "shows gate on any topic for user not in group" do
+      sign_in(non_member)
+      visit(topic.url)
+      expect(gated_topic).to have_gate
+      expect(gated_topic).to have_group_gate
     end
   end
 

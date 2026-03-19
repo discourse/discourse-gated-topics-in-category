@@ -35,11 +35,6 @@ export default class TopicInGatedCategory extends Component {
   }
 
   recalculate() {
-    // do nothing if:
-    // a) topic does not have a category and does not have a gated tag
-    // b) component setting is empty
-    // c) user is logged in as staff
-    // d) user is logged in and component is not gated by group or user is in an enabled group
     // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
     // removed using .discourse-compatibility once the PR is merged.
     const gatedByTag = this.tags?.some((t) => {
@@ -47,17 +42,28 @@ export default class TopicInGatedCategory extends Component {
       return this.enabledTags.includes(name);
     });
 
-    if (
-      (!this.categoryId && !gatedByTag) ||
-      (this.enabledCategories.length === 0 && this.enabledTags.length === 0) ||
-      this.currentUser?.staff ||
-      (this.currentUser && this.enabledGroups.length === 0) ||
-      (this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id)))
-    ) {
+    // user is in an enabled group — always bypass
+    if (this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))) {
       return;
     }
 
-    if (this.enabledCategories.includes(this.categoryId) || gatedByTag) {
+    const gatedByGroup = this.enabledGroups.length > 0;
+    const gatedByCategory = this.enabledCategories.includes(this.categoryId);
+    const hasAnyCategoryOrTag =
+      this.enabledCategories.length > 0 || this.enabledTags.length > 0;
+
+    // no settings configured at all
+    if (!hasAnyCategoryOrTag && !gatedByGroup) {
+      return;
+    }
+
+    // no groups configured — original behavior: any logged-in user bypasses
+    if (!gatedByGroup && this.currentUser) {
+      return;
+    }
+
+    // show gate if topic matches category/tag or group gating covers all topics
+    if (gatedByCategory || gatedByTag || gatedByGroup) {
       document.body.classList.add("topic-in-gated-category");
       this.set("hidden", false);
     }

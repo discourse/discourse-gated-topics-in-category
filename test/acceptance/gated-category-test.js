@@ -189,27 +189,23 @@ acceptance("Gated Topics - User in One of Multiple Groups", function (needs) {
   });
 });
 
-acceptance("Gated Topics - Staff Bypass with Groups", function (needs) {
+acceptance("Gated Topics - Groups Only (no categories or tags)", function (needs) {
   needs.user({
-    admin: true,
     groups: [{ id: 99, name: "other" }],
   });
-  needs.settings({ tagging_enabled: true });
   needs.hooks.beforeEach(function () {
-    settings.enabled_categories = "2";
     settings.enabled_groups = "42";
   });
 
   needs.hooks.afterEach(function () {
-    settings.enabled_categories = "";
     settings.enabled_groups = "";
   });
 
-  test("no gate shown for staff user not in allowed group", async function (assert) {
+  test("gate shown on any topic when only groups configured", async function (assert) {
     await visit("/t/internationalization-localization/280");
 
     assert
       .dom(".custom-gated-topic-content")
-      .doesNotExist("gate not shown for staff even when not in allowed group");
+      .exists("gate shown even without category/tag settings");
   });
 });
