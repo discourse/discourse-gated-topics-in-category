@@ -86,7 +86,7 @@ RSpec.describe "Gated topics with groups" do
 
   context "with custom button link" do
     before do
-      theme.update_setting(:custom_button_link, "https://example.com/subscribe")
+      theme.update_setting(:group_custom_button_link, "https://example.com/subscribe")
       theme.save!
     end
 

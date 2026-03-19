@@ -13,7 +13,7 @@ enabled_groups:
   list_type: group
   default: ""
   description: "Choose which groups users need to be a member of to view the content. Leave empty to allow all logged-in users."
-custom_button_link:
+group_custom_button_link:
   type: string
   default: ""
   description: "Optionally specify a custom URL for the call-to-action button for groups."

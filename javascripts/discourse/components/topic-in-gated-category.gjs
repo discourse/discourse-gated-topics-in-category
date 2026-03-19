@@ -37,36 +37,37 @@ export default class TopicInGatedCategory extends Component {
   recalculate() {
     // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
     // removed using .discourse-compatibility once the PR is merged.
-    const gatedByTag = this.tags?.some((t) => {
-      const name = typeof t === "string" ? t : t.name;
-      return this.enabledTags.includes(name);
-    });
 
     // user is in an enabled group — always bypass
     if (this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))) {
       return;
     }
 
-    const gatedByGroup = this.enabledGroups.length > 0;
+    const hasGroupGating = this.enabledGroups.length > 0;
     const gatedByCategory = this.enabledCategories.includes(this.categoryId);
+    const gatedByTag = this.tags?.some((t) => {
+      const name = typeof t === "string" ? t : t.name;
+      return this.enabledTags.includes(name);
+    });
     const hasAnyCategoryOrTag =
       this.enabledCategories.length > 0 || this.enabledTags.length > 0;
 
-    // no settings configured at all
-    if (!hasAnyCategoryOrTag && !gatedByGroup) {
+    if (!hasAnyCategoryOrTag && !hasGroupGating) {
+      return;
+    }
+
+    // when categories/tags are configured, topic must match one
+    if (hasAnyCategoryOrTag && !gatedByCategory && !gatedByTag) {
       return;
     }
 
     // no groups configured — original behavior: any logged-in user bypasses
-    if (!gatedByGroup && this.currentUser) {
+    if (!hasGroupGating && this.currentUser) {
       return;
     }
 
-    // show gate if topic matches category/tag or group gating covers all topics
-    if (gatedByCategory || gatedByTag || gatedByGroup) {
-      document.body.classList.add("topic-in-gated-category");
-      this.set("hidden", false);
-    }
+    document.body.classList.add("topic-in-gated-category");
+    this.set("hidden", false);
   }
 
   @computed("hidden")
@@ -96,15 +97,15 @@ export default class TopicInGatedCategory extends Component {
 
           <div class="custom-gated-topic-content--cta">
             {{#if this.showGroupGate}}
-              {{#if settings.custom_button_link}}
-                <div class="custom-gated-topic-content--cta__group">
+              <div class="custom-gated-topic-content--cta__group">
+                {{#if settings.group_custom_button_link}}
                   <DButton
-                    @href={{settings.custom_button_link}}
+                    @href={{settings.group_custom_button_link}}
                     class="btn-primary btn-large"
                     @translatedLabel={{i18n (themePrefix "group_cta_label")}}
                   />
-                </div>
-              {{/if}}
+                {{/if}}
+              </div>
             {{else}}
               <div class="custom-gated-topic-content--cta__signup">
                 <DButton

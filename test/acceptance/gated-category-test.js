@@ -122,8 +122,8 @@ acceptance("Gated Topics - User NOT in Allowed Group", function (needs) {
       .exists("gate shown when user is not in the allowed group");
 
     assert
-      .dom(".custom-gated-topic-content--cta__group")
-      .doesNotExist("no group CTA button when custom_button_link is empty");
+      .dom(".custom-gated-topic-content--cta__group .btn-primary")
+      .doesNotExist("no group CTA button when group_custom_button_link is empty");
 
     assert
       .dom(".custom-gated-topic-content--cta__signup")
@@ -139,13 +139,13 @@ acceptance("Gated Topics - User NOT in Group with Custom Link", function (needs)
   needs.hooks.beforeEach(function () {
     settings.enabled_categories = "2";
     settings.enabled_groups = "42";
-    settings.custom_button_link = "https://example.com/subscribe";
+    settings.group_custom_button_link = "https://example.com/subscribe";
   });
 
   needs.hooks.afterEach(function () {
     settings.enabled_categories = "";
     settings.enabled_groups = "";
-    settings.custom_button_link = "";
+    settings.group_custom_button_link = "";
   });
 
   test("gate shown with custom CTA button", async function (assert) {
