@@ -11,3 +11,5 @@ tr_TR:
   subheading_text: "Bu içeriği görüntülemek için bir hesap oluşturun"
   signup_cta_label: "Kaydol"
   login_cta_label: "Zaten hesabınız var mı? Giriş yapın"
+  group_subheading_text: "Bu içeriği görüntülemek için grup üyesi olmanız gerekir"
+  group_cta_label: "Grubu Göster"

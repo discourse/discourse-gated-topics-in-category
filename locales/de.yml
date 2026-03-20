@@ -11,3 +11,5 @@ de:
   subheading_text: "Erstelle ein Konto, um diesen Inhalt zu sehen"
   signup_cta_label: "Registrieren"
   login_cta_label: "Du hast bereits ein Konto? Anmelden"
+  group_subheading_text: "Du musst ein Gruppenmitglied sein, um diesen Inhalt zu sehen"
+  group_cta_label: "Gruppe anzeigen"
