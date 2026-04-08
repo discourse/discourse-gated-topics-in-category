@@ -11,3 +11,5 @@ ar:
   subheading_text: "أنشئ حسابًا لعرض هذا المحتوى"
   signup_cta_label: "الاشتراك"
   login_cta_label: "هل لديك حساب بالفعل؟ سجِّل الدخول"
+  group_subheading_text: "يجب أن تكون عضوًا في المجموعة لعرض هذا المحتوى"
+  group_cta_label: "عرض المجموعة"

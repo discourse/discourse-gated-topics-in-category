@@ -11,3 +11,5 @@ zh_CN:
   subheading_text: "创建帐户以查看此内容"
   signup_cta_label: "注册"
   login_cta_label: "已有帐户？请登录"
+  group_subheading_text: "您需要成为群组成员才能查看此内容"
+  group_cta_label: "显示群组"
