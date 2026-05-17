@@ -11,3 +11,5 @@ nl:
   subheading_text: "Maak een account om deze content te bekijken"
   signup_cta_label: "Registreren"
   login_cta_label: "Heb je al een account? Meld je aan"
+  group_subheading_text: "Je moet een groepslid zijn om deze inhoud te bekijken"
+  group_cta_label: "Groep tonen"
