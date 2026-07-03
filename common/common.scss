@@ -58,6 +58,10 @@
     overflow: hidden;
   }
 
+  .topic-post.sticky-avatar > article > .row > .topic-avatar {
+    top: 0;
+  }
+
   .container.posts {
     position: relative;
 
@@ -74,9 +78,9 @@
       background: rgb(255, 255, 255);
       background: linear-gradient(
         180deg,
-        rgb(255, 255, 255, 0) 10%,
-        rgb(255, 255, 255, 0.6) 60%,
-        rgb(255, 255, 255, 1) 100%
+        rgb(var(--secondary-rgb), 0) 0%,
+        rgb(var(--secondary-rgb), 1) 20%,
+        rgb(var(--secondary-rgb), 1) 100%
       );
     }
   }
