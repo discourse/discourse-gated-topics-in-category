@@ -5,36 +5,46 @@ import bodyClass from "discourse/helpers/body-class";
 import routeAction from "discourse/helpers/route-action";
 import { i18n } from "discourse-i18n";
 
-const enabledCategories = settings.enabled_categories
-  .split("|")
-  .map((id) => parseInt(id, 10))
-  .filter((id) => id);
-const enabledTags = settings.enabled_tags.split("|").filter(Boolean);
-const enabledGroups = settings.enabled_groups
-  .split("|")
-  .map((id) => parseInt(id, 10))
-  .filter((id) => !isNaN(id));
-
 export default class TopicInGatedCategory extends Component {
   @service currentUser;
 
+  get enabledCategories() {
+    return settings.enabled_categories
+      .split("|")
+      .map((id) => parseInt(id, 10))
+      .filter((id) => id);
+  }
+
+  get enabledTags() {
+    return settings.enabled_tags.split("|").filter(Boolean);
+  }
+
+  get enabledGroups() {
+    return settings.enabled_groups
+      .split("|")
+      .map((id) => parseInt(id, 10))
+      .filter((id) => !isNaN(id));
+  }
+
   get shouldShow() {
     // user is in an enabled group — always bypass
-    if (this.currentUser?.groups?.some((g) => enabledGroups.includes(g.id))) {
+    if (
+      this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))
+    ) {
       return false;
     }
 
-    const hasGroupGating = enabledGroups.length > 0;
-    const gatedByCategory = enabledCategories.includes(
+    const hasGroupGating = this.enabledGroups.length > 0;
+    const gatedByCategory = this.enabledCategories.includes(
       this.args.outletArgs.model.category_id
     );
 
     const gatedByTag = this.args.outletArgs.model.tags?.some((t) =>
-      enabledTags.includes(t.name)
+      this.enabledTags.includes(t.name)
     );
 
     const hasAnyCategoryOrTag =
-      enabledCategories.length > 0 || enabledTags.length > 0;
+      this.enabledCategories.length > 0 || this.enabledTags.length > 0;
 
     if (!hasAnyCategoryOrTag && !hasGroupGating) {
       return false;
@@ -54,7 +64,7 @@ export default class TopicInGatedCategory extends Component {
   }
 
   get showGroupGate() {
-    return this.currentUser && enabledGroups.length > 0;
+    return this.currentUser && this.enabledGroups.length > 0;
   }
 
   <template>
