@@ -42,7 +42,7 @@ RSpec.describe "Gated topics with groups" do
 
   context "when no groups are configured" do
     before do
-      theme.update_setting(:enabled_groups, "")
+      theme.update_setting(:enabled_groups, "5")
       theme.save!
     end
 

@@ -26,15 +26,24 @@ export default class TopicInGatedCategory extends Component {
       .filter((id) => !isNaN(id));
   }
 
+  get userInEnabledGroups() {
+    if (Object.hasOwn(settings, "user_in_enabled_groups")) {
+      return settings.user_in_enabled_groups;
+    } else {
+      // TODO (martin) Remove this fallback after resolve_group_membership
+      // from core is available everywhere
+      return this.currentUser?.groups?.some((g) =>
+        this.enabledGroups.includes(g.id)
+      );
+    }
+  }
+
   get shouldShow() {
     // user is in an enabled group — always bypass
-    if (
-      this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))
-    ) {
+    if (this.userInEnabledGroups) {
       return false;
     }
 
-    const hasGroupGating = this.enabledGroups.length > 0;
     const gatedByCategory = this.enabledCategories.includes(
       this.args.outletArgs.model.category_id
     );
@@ -46,7 +55,7 @@ export default class TopicInGatedCategory extends Component {
     const hasAnyCategoryOrTag =
       this.enabledCategories.length > 0 || this.enabledTags.length > 0;
 
-    if (!hasAnyCategoryOrTag && !hasGroupGating) {
+    if (!hasAnyCategoryOrTag && !this.hasGroupGating) {
       return false;
     }
 
@@ -55,16 +64,31 @@ export default class TopicInGatedCategory extends Component {
       return false;
     }
 
-    // no groups configured,any logged-in user bypasses
-    if (!hasGroupGating && this.currentUser) {
+    // no groups configured, any logged-in user bypasses
+    if (!this.hasGroupGating && this.currentUser) {
       return false;
     }
 
     return true;
   }
 
+  get hasGroupGating() {
+    if (Object.hasOwn(settings, "user_in_enabled_groups")) {
+      // NOTE (martin): New way of representing group gating being "off" or
+      // logged in users only is to have it with group ID 5 (logged in users).
+      //
+      // Old way of representing group gating being "off" or logged in users
+      // only is to have no groups configured.
+      return this.enabledGroups.length === 1 && this.enabledGroups[0] === 5;
+    } else {
+      // TODO (martin) Remove this fallback after resolve_group_membership
+      // from core is available everywhere
+      return this.enabledGroups.length > 0;
+    }
+  }
+
   get showGroupGate() {
-    return this.currentUser && this.enabledGroups.length > 0;
+    return this.currentUser && this.hasGroupGating;
   }
 
   <template>

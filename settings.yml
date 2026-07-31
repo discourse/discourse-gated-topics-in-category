@@ -11,8 +11,10 @@ enabled_tags:
 enabled_groups:
   type: list
   list_type: group
-  default: ""
-  description: "Choose which groups users need to be a member of to view the content. Leave empty to allow all logged-in users."
+  default: "5"
+  disallowed_groups: "4"
+  resolve_group_membership: true
+  description: "Choose which groups users need to be a member of to view the content."
 group_custom_button_link:
   type: string
   default: ""
