@@ -55,7 +55,7 @@ export default class TopicInGatedCategory extends Component {
     const hasAnyCategoryOrTag =
       this.enabledCategories.length > 0 || this.enabledTags.length > 0;
 
-    if (!hasAnyCategoryOrTag && !this.showGroupGate) {
+    if (!hasAnyCategoryOrTag && !this.groupGatingEnabled) {
       return false;
     }
 
@@ -71,8 +71,12 @@ export default class TopicInGatedCategory extends Component {
     return true;
   }
 
-  get showGroupGate() {
+  get groupGatingEnabled() {
     return settings.enable_gating_with_groups;
+  }
+
+  get showGroupGate() {
+    return Boolean(this.currentUser && this.groupGatingEnabled);
   }
 
   <template>
