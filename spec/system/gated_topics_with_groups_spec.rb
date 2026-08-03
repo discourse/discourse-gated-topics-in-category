@@ -17,6 +17,7 @@ RSpec.describe "Gated topics with groups" do
     group.add(member)
     theme.update_setting(:enabled_categories, category.id.to_s)
     theme.update_setting(:enabled_groups, group.id.to_s)
+    theme.update_setting(:enable_gating_with_groups, true)
     theme.save!
   end
 
@@ -42,7 +43,7 @@ RSpec.describe "Gated topics with groups" do
 
   context "when no groups are configured" do
     before do
-      theme.update_setting(:enabled_groups, "")
+      theme.update_setting(:enabled_groups, "5")
       theme.save!
     end
 
@@ -81,6 +82,12 @@ RSpec.describe "Gated topics with groups" do
       visit(topic.url)
       expect(gated_topic).to have_gate
       expect(gated_topic).to have_group_gate
+    end
+
+    it "shows the signup gate on any topic for anonymous users" do
+      visit(topic.url)
+      expect(gated_topic).to have_gate
+      expect(gated_topic).to have_signup_gate
     end
   end
 

@@ -7,6 +7,8 @@ acceptance("Gated Topics - Anonymous", function (needs) {
   needs.hooks.beforeEach(function () {
     settings.enabled_categories = "2";
     settings.enabled_tags = "foo|baz";
+    settings.user_in_enabled_groups = false;
+    settings.enable_gating_with_groups = true;
   });
 
   needs.hooks.afterEach(function () {
@@ -43,37 +45,42 @@ acceptance("Gated Topics - Anonymous", function (needs) {
   });
 });
 
-acceptance("Gated Topics - Logged In", function (needs) {
-  needs.user();
-  needs.settings({ tagging_enabled: true });
-  needs.hooks.beforeEach(function () {
-    settings.enabled_categories = "2";
-    settings.enabled_tags = "foo|baz";
-  });
+acceptance(
+  "Gated Topics - Logged In, but gating with groups disabled",
+  function (needs) {
+    needs.user();
+    needs.settings({ tagging_enabled: true });
+    needs.hooks.beforeEach(function () {
+      settings.enabled_categories = "2";
+      settings.enabled_tags = "foo|baz";
+      settings.user_in_enabled_groups = true;
+      settings.enable_gating_with_groups = false;
+    });
 
-  needs.hooks.afterEach(function () {
-    settings.enabled_categories = "";
-    settings.enabled_tags = "";
-  });
+    needs.hooks.afterEach(function () {
+      settings.enabled_categories = "";
+      settings.enabled_tags = "";
+    });
 
-  test("Viewing Topic in gated category", async function (assert) {
-    await visit("/t/internationalization-localization/280");
+    test("Viewing Topic in gated category", async function (assert) {
+      await visit("/t/internationalization-localization/280");
 
-    assert
-      .dom(".topic-in-gated-category .custom-gated-topic-content")
-      .doesNotExist("gated category prompt not shown on selected category");
-  });
+      assert
+        .dom(".topic-in-gated-category .custom-gated-topic-content")
+        .doesNotExist("gated category prompt not shown on selected category");
+    });
 
-  test("Viewing Topic with gated tag", async function (assert) {
-    await visit("/t/2480");
+    test("Viewing Topic with gated tag", async function (assert) {
+      await visit("/t/2480");
 
-    assert
-      .dom(".topic-in-gated-category .custom-gated-topic-content")
-      .doesNotExist(
-        "gated category prompt not shown on topic with selected tag"
-      );
-  });
-});
+      assert
+        .dom(".topic-in-gated-category .custom-gated-topic-content")
+        .doesNotExist(
+          "gated category prompt not shown on topic with selected tag"
+        );
+    });
+  }
+);
 
 acceptance("Gated Topics - User in Allowed Group", function (needs) {
   needs.user({
@@ -83,6 +90,8 @@ acceptance("Gated Topics - User in Allowed Group", function (needs) {
   needs.hooks.beforeEach(function () {
     settings.enabled_categories = "2";
     settings.enabled_groups = "42";
+    settings.user_in_enabled_groups = true;
+    settings.enable_gating_with_groups = true;
   });
 
   needs.hooks.afterEach(function () {
@@ -107,6 +116,8 @@ acceptance("Gated Topics - User NOT in Allowed Group", function (needs) {
   needs.hooks.beforeEach(function () {
     settings.enabled_categories = "2";
     settings.enabled_groups = "42";
+    settings.user_in_enabled_groups = false;
+    settings.enable_gating_with_groups = true;
   });
 
   needs.hooks.afterEach(function () {
@@ -144,6 +155,8 @@ acceptance(
       settings.enabled_categories = "2";
       settings.enabled_groups = "42";
       settings.group_custom_button_link = "https://example.com/subscribe";
+      settings.user_in_enabled_groups = false;
+      settings.enable_gating_with_groups = true;
     });
 
     needs.hooks.afterEach(function () {
@@ -178,6 +191,8 @@ acceptance("Gated Topics - User in One of Multiple Groups", function (needs) {
   needs.hooks.beforeEach(function () {
     settings.enabled_categories = "2";
     settings.enabled_groups = "42|99";
+    settings.user_in_enabled_groups = true;
+    settings.enable_gating_with_groups = true;
   });
 
   needs.hooks.afterEach(function () {
@@ -202,6 +217,8 @@ acceptance(
     });
     needs.hooks.beforeEach(function () {
       settings.enabled_groups = "42";
+      settings.user_in_enabled_groups = false;
+      settings.enable_gating_with_groups = true;
     });
 
     needs.hooks.afterEach(function () {

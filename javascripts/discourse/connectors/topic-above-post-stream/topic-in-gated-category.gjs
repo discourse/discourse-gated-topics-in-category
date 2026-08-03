@@ -26,15 +26,24 @@ export default class TopicInGatedCategory extends Component {
       .filter((id) => !isNaN(id));
   }
 
+  get userInEnabledGroups() {
+    if (Object.hasOwn(settings, "user_in_enabled_groups")) {
+      return settings.user_in_enabled_groups;
+    } else {
+      // TODO (martin) Remove this fallback after resolve_group_membership
+      // from core is available everywhere
+      return this.currentUser?.groups?.some((g) =>
+        this.enabledGroups.includes(g.id)
+      );
+    }
+  }
+
   get shouldShow() {
     // user is in an enabled group — always bypass
-    if (
-      this.currentUser?.groups?.some((g) => this.enabledGroups.includes(g.id))
-    ) {
+    if (this.userInEnabledGroups) {
       return false;
     }
 
-    const hasGroupGating = this.enabledGroups.length > 0;
     const gatedByCategory = this.enabledCategories.includes(
       this.args.outletArgs.model.category_id
     );
@@ -46,7 +55,7 @@ export default class TopicInGatedCategory extends Component {
     const hasAnyCategoryOrTag =
       this.enabledCategories.length > 0 || this.enabledTags.length > 0;
 
-    if (!hasAnyCategoryOrTag && !hasGroupGating) {
+    if (!hasAnyCategoryOrTag && !this.groupGatingEnabled) {
       return false;
     }
 
@@ -55,16 +64,19 @@ export default class TopicInGatedCategory extends Component {
       return false;
     }
 
-    // no groups configured,any logged-in user bypasses
-    if (!hasGroupGating && this.currentUser) {
+    if (!this.showGroupGate && this.currentUser) {
       return false;
     }
 
     return true;
   }
 
+  get groupGatingEnabled() {
+    return settings.enable_gating_with_groups;
+  }
+
   get showGroupGate() {
-    return this.currentUser && this.enabledGroups.length > 0;
+    return Boolean(this.currentUser && this.groupGatingEnabled);
   }
 
   <template>
