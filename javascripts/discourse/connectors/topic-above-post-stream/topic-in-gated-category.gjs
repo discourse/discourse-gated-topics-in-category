@@ -55,7 +55,7 @@ export default class TopicInGatedCategory extends Component {
     const hasAnyCategoryOrTag =
       this.enabledCategories.length > 0 || this.enabledTags.length > 0;
 
-    if (!hasAnyCategoryOrTag && !this.hasGroupGating) {
+    if (!hasAnyCategoryOrTag && !this.showGroupGate) {
       return false;
     }
 
@@ -64,35 +64,15 @@ export default class TopicInGatedCategory extends Component {
       return false;
     }
 
-    // no groups configured, any logged-in user bypasses
-    if (!this.hasGroupGating && this.currentUser) {
+    if (!this.showGroupGate && this.currentUser) {
       return false;
     }
 
     return true;
   }
 
-  get hasGroupGating() {
-    if (Object.hasOwn(settings, "user_in_enabled_groups")) {
-      return true;
-    }
-
-    // TODO (martin) Remove this fallback after resolve_group_membership
-    // from core is available everywhere.
-    //
-    // With the latest changes, if logged in users should see a group gate,
-    // the enabled_groups setting will always be populated with at least one group ID.
-    return this.enabledGroups.length > 0;
-  }
-
   get showGroupGate() {
-    if (Object.hasOwn(settings, "user_in_enabled_groups")) {
-      return this.currentUser;
-    }
-
-    // TODO (martin) Remove this fallback after resolve_group_membership
-    // from core is available everywhere
-    return this.currentUser && this.hasGroupGating;
+    return settings.enable_gating_with_groups;
   }
 
   <template>

@@ -14,7 +14,11 @@ enabled_groups:
   default: "5"
   disallowed_groups: "4"
   resolve_group_membership: true
-  description: "Choose which groups users need to be a member of to view the content."
+  description: "Choose which groups users need to be a member of to view the content when 'enable_gating_with_groups' is enabled."
+enable_gating_with_groups:
+  type: boolean
+  default: true
+  description: "Enable gating with groups. If enabled, users must be a member of the specified groups to view the content."
 group_custom_button_link:
   type: string
   default: ""
