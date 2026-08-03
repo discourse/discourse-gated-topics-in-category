@@ -73,6 +73,10 @@ export default class TopicInGatedCategory extends Component {
   }
 
   get hasGroupGating() {
+    if (Object.hasOwn(settings, "user_in_enabled_groups")) {
+      return true;
+    }
+
     // TODO (martin) Remove this fallback after resolve_group_membership
     // from core is available everywhere.
     //
