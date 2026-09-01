@@ -84,7 +84,7 @@ acceptance(
 
 acceptance("Gated Topics - User in Allowed Group", function (needs) {
   needs.user({
-    groups: [{ id: 42, name: "premium" }],
+    visibleGroups: [{ id: 42, name: "premium" }],
   });
   needs.settings({ tagging_enabled: true });
   needs.hooks.beforeEach(function () {
@@ -110,7 +110,7 @@ acceptance("Gated Topics - User in Allowed Group", function (needs) {
 
 acceptance("Gated Topics - User NOT in Allowed Group", function (needs) {
   needs.user({
-    groups: [{ id: 99, name: "other" }],
+    visibleGroups: [{ id: 99, name: "other" }],
   });
   needs.settings({ tagging_enabled: true });
   needs.hooks.beforeEach(function () {
@@ -148,7 +148,7 @@ acceptance(
   "Gated Topics - User NOT in Group with Custom Link",
   function (needs) {
     needs.user({
-      groups: [{ id: 99, name: "other" }],
+      visibleGroups: [{ id: 99, name: "other" }],
     });
     needs.settings({ tagging_enabled: true });
     needs.hooks.beforeEach(function () {
@@ -185,7 +185,7 @@ acceptance(
 
 acceptance("Gated Topics - User in One of Multiple Groups", function (needs) {
   needs.user({
-    groups: [{ id: 99, name: "vip" }],
+    visibleGroups: [{ id: 99, name: "vip" }],
   });
   needs.settings({ tagging_enabled: true });
   needs.hooks.beforeEach(function () {
@@ -213,7 +213,7 @@ acceptance(
   "Gated Topics - Groups Only (no categories or tags)",
   function (needs) {
     needs.user({
-      groups: [{ id: 99, name: "other" }],
+      visibleGroups: [{ id: 99, name: "other" }],
     });
     needs.hooks.beforeEach(function () {
       settings.enabled_groups = "42";

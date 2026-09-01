@@ -31,10 +31,14 @@ export default class TopicInGatedCategory extends Component {
       return settings.user_in_enabled_groups;
     } else {
       // TODO (martin) Remove this fallback after resolve_group_membership
-      // from core is available everywhere
-      return this.currentUser?.groups?.some((g) =>
-        this.enabledGroups.includes(g.id)
-      );
+      // from core is available everywhere.
+      //
+      // `visibleGroups` replaced `groups` in core, keep reading the old
+      // property for older Discourse versions.
+      const userGroups =
+        this.currentUser?.visibleGroups ?? this.currentUser?.groups;
+
+      return userGroups?.some((g) => this.enabledGroups.includes(g.id));
     }
   }
 
