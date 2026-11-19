@@ -19,6 +19,17 @@ export default class TopicInGatedCategory extends Component {
     return settings.enabled_tags.split("|").filter(Boolean);
   }
 
+  get exemptTopicIds() {
+    return settings.exempt_topic_ids
+      .split("|")
+      .map((id) => parseInt(id, 10))
+      .filter((id) => id);
+  }
+
+  get isExempt() {
+    return this.exemptTopicIds.includes(this.args.outletArgs.model.id);
+  }
+
   get enabledGroups() {
     return settings.enabled_groups
       .split("|")
@@ -45,6 +56,11 @@ export default class TopicInGatedCategory extends Component {
   get shouldShow() {
     // user is in an enabled group — always bypass
     if (this.userInEnabledGroups) {
+      return false;
+    }
+
+    // topic is exempt by topic ID — never gate
+    if (this.isExempt) {
       return false;
     }
 
