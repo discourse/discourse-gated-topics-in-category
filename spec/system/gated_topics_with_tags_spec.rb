@@ -27,4 +27,13 @@ RSpec.describe "Gated topics with tags" do
     visit(topic.url)
     expect(gated_topic).to have_no_gate
   end
+
+  it "does not show gate when topic ID is exempt" do
+    theme.update_setting(:exempt_topic_ids, topic.id.to_s)
+    theme.save!
+    topic.update!(tags: [tag])
+
+    visit(topic.url)
+    expect(gated_topic).to have_no_gate
+  end
 end

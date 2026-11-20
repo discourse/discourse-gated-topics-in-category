@@ -8,6 +8,10 @@ enabled_tags:
   list_type: tag
   default: ""
   description: "Choose which tags that users need to sign up for. The default is 'gated'."
+exempt_topic_ids:
+  type: list
+  default: ""
+  description: "Topic IDs that are never gated, even if they match a gated category or tag. The ID is the number at the end of the topic URL."
 enabled_groups:
   type: list
   list_type: group
